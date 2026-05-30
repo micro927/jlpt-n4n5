@@ -21,7 +21,7 @@ function App() {
 
   const handleLevelChange = (nextLevel: Level) => {
     setLevel(nextLevel)
-    setTab('vocab')
+    // setTab('vocab')
     setActiveFilters([])
     // setQuery('')
   }

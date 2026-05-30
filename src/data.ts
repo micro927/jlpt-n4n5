@@ -1,4 +1,5 @@
 import type { Level, Tab, VocabItem, KanjiItem, StudyItem } from './types'
+import { GRAMMAR_N4, GRAMMAR_N5 } from './grammar_data'
 
 const VOCAB_N4: VocabItem[] = [
   { jp: '週末', furi: 'しゅうまつ', rom: 'shuumatsu', th: 'สุดสัปดาห์', cat: 'time' },
@@ -281,14 +282,17 @@ const KANJI_N5: KanjiItem[] = [
   { jp: '足', furi: 'そく・あし', on: 'ソク', kun: 'あし・た（りる）', th: 'เท้า / ขา', ex: '足（あし）・足りる（たりる）', cat: 'kanji' },
 ]
 
+
 const STUDY_DATA = {
   n4: {
     vocab: VOCAB_N4,
     kanji: KANJI_N4,
+    grammar: GRAMMAR_N4,
   },
   n5: {
     vocab: VOCAB_N5,
     kanji: KANJI_N5,
+    grammar: GRAMMAR_N5,
   },
 } as const
 

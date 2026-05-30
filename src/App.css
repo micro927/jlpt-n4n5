@@ -163,6 +163,10 @@
   gap: 14px;
 }
 
+.grid:has(.cat-grammar) {
+  grid-template-columns: 1fr;
+}
+
 .card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -269,6 +273,10 @@
   margin-top: 12px;
   font-weight: 600;
   letter-spacing: 0.5px;
+}
+
+.card-example li {
+  margin-bottom: 6px;
 }
 
 .cat-time .card-cat {

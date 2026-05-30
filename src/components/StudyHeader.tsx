@@ -35,7 +35,7 @@ export function StudyHeader({ level, tab, onLevelChange, onTabChange, levelLabel
       </div>
 
       <div className="tabs">
-        {(['vocab', 'kanji'] as Tab[]).map((option) => (
+        {(['vocab', 'kanji', 'grammar'] as Tab[]).map((option) => (
           <button
             key={option}
             type="button"

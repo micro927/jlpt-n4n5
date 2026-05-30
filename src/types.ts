@@ -1,5 +1,5 @@
 export type Level = 'n4' | 'n5'
-export type Tab = 'vocab' | 'kanji'
+export type Tab = 'vocab' | 'kanji' | 'grammar'
 export type VocabCategory =
   | 'time'
   | 'daily'
@@ -10,7 +10,8 @@ export type VocabCategory =
   | 'nature'
   | 'action'
 export type KanjiCategory = 'kanji'
-export type Category = VocabCategory | KanjiCategory
+export type GrammarCategory = 'grammar'
+export type Category = VocabCategory | KanjiCategory | GrammarCategory
 
 export interface VocabItem {
   jp: string
@@ -30,4 +31,18 @@ export interface KanjiItem {
   cat: KanjiCategory
 }
 
-export type StudyItem = VocabItem | KanjiItem
+export interface GrammarExample {
+  jp: string
+  th: string
+}
+
+export interface GrammarItem {
+  jp: string
+  furi: string
+  th: string
+  explain?: string
+  ex?: GrammarExample[]
+  cat: GrammarCategory
+}
+
+export type StudyItem = VocabItem | KanjiItem | GrammarItem

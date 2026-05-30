@@ -1,6 +1,7 @@
 import type { StudyItem, Tab } from '../types'
 import { VocabCard } from './VocabCard'
 import { KanjiCard } from './KanjiCard'
+import { GrammarCard } from './GrammarCard'
 import { useEffect } from 'react'
 
 interface StudyGridProps {
@@ -30,6 +31,10 @@ export function StudyGrid({ items, tab, categoryLabels }: StudyGridProps) {
 
           if (tab === 'vocab' && 'rom' in item) {
             return <VocabCard key={item.jp} item={item} categoryLabel={categoryLabels[item.cat]} />
+          }
+
+          if (tab === 'grammar' && 'explain' in item) {
+            return <GrammarCard key={item.jp} item={item} categoryLabel={categoryLabels[item.cat]} />
           }
 
           return null
