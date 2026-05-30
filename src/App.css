@@ -91,9 +91,9 @@
 
 .controls {
   display: flex;
+  flex-direction: column;
   gap: 10px;
   padding: 16px 32px;
-  flex-wrap: wrap;
   align-items: center;
   border-bottom: 1px solid var(--border);
   background: var(--surface);
@@ -109,6 +109,7 @@
   color: var(--text);
   outline: none;
   transition: border-color 0.2s ease;
+  width: 100%;
 }
 
 .search-input:focus {
@@ -121,8 +122,10 @@
 
 .filter-group {
   display: flex;
-  gap: 8px;
   flex-wrap: wrap;
+  gap: 8px;
+  overflow-x: scroll;
+  width: 100%;
 }
 
 .filter-btn {
@@ -369,5 +372,9 @@
 
   .card-jp {
     font-size: 1.35rem;
+  }
+
+  .filter-group {
+    flex-wrap: unset;
   }
 }
