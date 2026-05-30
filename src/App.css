@@ -1,0 +1,373 @@
+.app-shell {
+  min-height: 100vh;
+}
+
+.page-header {
+  background: linear-gradient(135deg, #1a1928 0%, #12112a 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 28px 32px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.header-top h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.6rem;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+
+.badge {
+  background: var(--accent2);
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.level-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.level-btn,
+.tab {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Sarabun', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 1px;
+}
+
+.level-btn:hover:not(.active-n4):not(.active-n5),
+.tab:hover:not(.active) {
+  color: var(--text);
+  border-color: var(--muted);
+}
+
+.level-btn.active-n4 {
+  background: var(--accent);
+  color: #0f0e17;
+  border-color: var(--accent);
+}
+
+.level-btn.active-n5 {
+  background: var(--red);
+  color: white;
+  border-color: var(--red);
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tab.active {
+  background: var(--accent);
+  color: #0f0e17;
+  border-color: var(--accent);
+  font-weight: 700;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  padding: 16px 32px;
+  flex-wrap: wrap;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.search-input {
+  flex: 1;
+  min-width: 220px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: var(--accent2);
+}
+
+.search-input::placeholder {
+  color: var(--muted);
+}
+
+.filter-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.filter-btn.on {
+  background: var(--accent2);
+  color: white;
+  border-color: var(--accent2);
+}
+
+.count-label {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.main-content {
+  padding: 24px 32px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 14px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 18px 14px;
+  cursor: default;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent2);
+  box-shadow: 0 4px 20px rgba(124, 106, 247, 0.15);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 12px 12px 0 0;
+}
+
+.cat-time::before {
+  background: #f25c6e;
+}
+
+.cat-daily::before {
+  background: #5ac97e;
+}
+
+.cat-work::before {
+  background: #7c6af7;
+}
+
+.cat-emotion::before {
+  background: #e8b86d;
+}
+
+.cat-transport::before {
+  background: #4ecdc4;
+}
+
+.cat-body::before {
+  background: #f7a072;
+}
+
+.cat-nature::before {
+  background: #a8e6cf;
+}
+
+.cat-action::before {
+  background: #c3a6ff;
+}
+
+.cat-kanji::before {
+  background: linear-gradient(90deg, #e8b86d, #f25c6e);
+}
+
+.card-jp {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+
+.kanji-symbol {
+  font-size: 2.4rem;
+}
+
+.card-furigana {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.8rem;
+  color: var(--accent);
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+}
+
+.card-reading {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+.card-th {
+  font-size: 0.95rem;
+  color: var(--text);
+  opacity: 0.92;
+  line-height: 1.4;
+}
+
+.card-cat {
+  display: inline-block;
+  font-size: 0.7rem;
+  padding: 4px 10px;
+  border-radius: 10px;
+  margin-top: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.cat-time .card-cat {
+  background: rgba(242, 92, 110, 0.15);
+  color: #f25c6e;
+}
+
+.cat-daily .card-cat {
+  background: rgba(90, 201, 126, 0.15);
+  color: #5ac97e;
+}
+
+.cat-work .card-cat {
+  background: rgba(124, 106, 247, 0.15);
+  color: #a899ff;
+}
+
+.cat-emotion .card-cat {
+  background: rgba(232, 184, 109, 0.15);
+  color: #e8b86d;
+}
+
+.cat-transport .card-cat {
+  background: rgba(78, 205, 196, 0.15);
+  color: #4ecdc4;
+}
+
+.cat-body .card-cat {
+  background: rgba(247, 160, 114, 0.15);
+  color: #f7a072;
+}
+
+.cat-nature .card-cat {
+  background: rgba(168, 230, 207, 0.15);
+  color: #a8e6cf;
+}
+
+.cat-action .card-cat {
+  background: rgba(195, 166, 255, 0.15);
+  color: #c3a6ff;
+}
+
+.cat-kanji .card-cat {
+  background: rgba(232, 184, 109, 0.1);
+  color: #e8b86d;
+}
+
+.kanji-on,
+.kanji-kun {
+  font-size: 0.78rem;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+.kanji-on {
+  color: #f25c6e;
+}
+
+.kanji-kun {
+  color: #5ac97e;
+}
+
+.kanji-label {
+  font-weight: 700;
+  margin-right: 4px;
+  opacity: 0.75;
+}
+
+.kanji-example {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 0;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+@media (max-width: 600px) {
+  .page-header {
+    padding: 18px 16px 14px;
+  }
+
+  .controls {
+    padding: 12px 16px;
+  }
+
+  .main-content {
+    padding: 16px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+    gap: 10px;
+  }
+
+  .card-jp {
+    font-size: 1.35rem;
+  }
+}

@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Noto+Sans+JP:wght@400;700&family=Sarabun:wght@400;600;700&display=swap');
+
+:root {
+  --bg: #0f0e17;
+  --surface: #1a1928;
+  --card: #22213a;
+  --accent: #e8b86d;
+  --accent2: #7c6af7;
+  --red: #f25c6e;
+  --text: #ede9f6;
+  --muted: #7e7a9a;
+  --border: #2e2c4a;
+  --max-width: 1240px;
+
+  font-family: 'Sarabun', 'Noto Sans JP', sans-serif;
+  font-size: 16px;
+  color: var(--text);
+  background: var(--bg);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+#root {
+  width: min(100%, var(--max-width));
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  :root {
+    font-size: 15px;
+  }
+}
