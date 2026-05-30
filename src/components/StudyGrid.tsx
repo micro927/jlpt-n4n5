@@ -1,6 +1,7 @@
 import type { StudyItem, Tab } from '../types'
 import { VocabCard } from './VocabCard'
 import { KanjiCard } from './KanjiCard'
+import { useEffect } from 'react'
 
 interface StudyGridProps {
   items: StudyItem[]
@@ -9,6 +10,12 @@ interface StudyGridProps {
 }
 
 export function StudyGrid({ items, tab, categoryLabels }: StudyGridProps) {
+
+  useEffect(() => {
+    return () => window.scrollTo(0,0);
+  }, [items]);
+
+
   if (items.length === 0) {
     return <div className="empty-state">ไม่พบรายการที่ค้นหา</div>
   }

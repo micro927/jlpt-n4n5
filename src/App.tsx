@@ -23,13 +23,13 @@ function App() {
     setLevel(nextLevel)
     setTab('vocab')
     setActiveFilters([])
-    setQuery('')
+    // setQuery('')
   }
 
   const handleTabChange = (nextTab: Tab) => {
     setTab(nextTab)
     setActiveFilters([])
-    setQuery('')
+    // setQuery('')
   }
 
   const handleToggleFilter = (category: Category) => {
