@@ -2,11 +2,7 @@ import { useMemo } from 'react';
 import type { StudyItem, Category } from '../types';
 import { matchesSearch } from '../utils/search';
 
-export function useFilteredItems(
-  items: ReadonlyArray<StudyItem>,
-  query: string,
-  activeFilters: Category[]
-) {
+export function useFilteredItems(items: StudyItem[], query: string, activeFilters: Category[]) {
   return useMemo(() => {
     const normalizedQuery = query.trim();
     return items.filter((item) => {

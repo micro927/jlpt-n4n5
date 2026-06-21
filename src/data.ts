@@ -1091,17 +1091,20 @@ const STUDY_DATA = {
   }
 } as const;
 
-export const getStudyData = (level: Level, tab: Tab): ReadonlyArray<StudyItem> => {
-  const items = STUDY_DATA[level][tab];
-  if (tab === 'kanji') {
+export const getStudyData = (level: Level, tab: Tab): StudyItem[] => {
+  const items = STUDY_DATA[level][tab] as StudyItem[];
+
+  if (tab === 'vocab') {
     const seen = new Set<string>();
-    const deduped = (items as ReadonlyArray<StudyItem>).filter((it) => {
+    const deduped = items.filter((it) => {
       const key = (it as StudyItem).jp ?? '';
       if (seen.has(key)) return false;
       seen.add(key);
       return true;
     });
-    return deduped as ReadonlyArray<StudyItem>;
+
+    return deduped.sort((a, b) => a.furi.localeCompare(b.furi));
   }
+
   return items;
 };

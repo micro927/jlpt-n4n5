@@ -26,7 +26,7 @@ const vocabCategoryLabels: Record<VocabCategory, string> = {
   body: '🩺 ร่างกาย/สุขภาพ',
   nature: '🌿 ธรรมชาติ',
   action: '⚡ กริยาสำคัญ',
-  none: '📓 คำศัพท์หลัก'
+  none: '📓 ไม่ระบุ'
 };
 
 const kanjiCategoryLabelsN4: Record<KanjiCategory, string> = {
