@@ -230,6 +230,7 @@
   padding: 2px 20px;
   border-radius: 10px;
   align-content: center;
+  user-select: none;
 }
 
 .kanji-symbol {
