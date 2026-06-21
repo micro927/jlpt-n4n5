@@ -1103,7 +1103,7 @@ export const getStudyData = (level: Level, tab: Tab): StudyItem[] => {
       return true;
     });
 
-    return deduped.sort((a, b) => a.furi.localeCompare(b.furi));
+    return deduped.sort((a, b) => a.furi.localeCompare(b.furi, 'ja'));
   }
 
   return items;
