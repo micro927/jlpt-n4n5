@@ -12,6 +12,18 @@
   --border: #2e2c4a;
   --max-width: 1240px;
 
+  /* Category Colors */
+  --cat-time: #f25c6e;
+  --cat-daily: #5ac97e;
+  --cat-work: #7c6af7;
+  --cat-emotion: #e8b86d;
+  --cat-transport: #4ecdc4;
+  --cat-body: #f7a072;
+  --cat-nature: #a8e6cf;
+  --cat-action: #c3a6ff;
+  --cat-kanji: #e8b86d;
+  --cat-none: #8b92a6;
+
   font-family: 'Sarabun', 'Noto Sans JP', sans-serif;
   font-size: 16px;
   color: var(--text);
