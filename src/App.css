@@ -230,6 +230,10 @@
   background: linear-gradient(90deg, #e8b86d, #f25c6e);
 }
 
+.cat-none::before {
+  background: #8b92a6;
+}
+
 .card-jp {
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 1.7rem;
@@ -322,6 +326,11 @@
 .cat-kanji .card-cat {
   background: rgba(232, 184, 109, 0.1);
   color: #e8b86d;
+}
+
+.cat-none .card-cat {
+  background: rgba(139, 146, 166, 0.15);
+  color: #8b92a6;
 }
 
 .kanji-on,

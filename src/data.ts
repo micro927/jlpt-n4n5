@@ -1,5 +1,6 @@
-import type { Level, Tab, VocabItem, KanjiItem, StudyItem } from './types'
-import { GRAMMAR_N4, GRAMMAR_N5 } from './grammar_data'
+import type { Level, Tab, VocabItem, KanjiItem, StudyItem, VocabCategory } from './types';
+import { GRAMMAR_N4, GRAMMAR_N5 } from './grammar_data';
+import { vocab as EXTERNAL_VOCAB } from './data_vocab_external';
 
 const VOCAB_N4: VocabItem[] = [
   { jp: '週末', furi: 'しゅうまつ', rom: 'shuumatsu', th: 'สุดสัปดาห์', cat: 'time' },
@@ -97,61 +98,461 @@ const VOCAB_N4: VocabItem[] = [
   { jp: '断る', furi: 'ことわる', rom: 'kotowaru', th: 'ปฏิเสธ', cat: 'action' },
   { jp: '迷う', furi: 'まよう', rom: 'mayou', th: 'ลังเล / หลงทาง', cat: 'action' },
   { jp: '気づく', furi: 'きづく', rom: 'kiduku', th: 'สังเกตเห็น / รู้ตัว', cat: 'action' },
-  { jp: '諦める', furi: 'あきらめる', rom: 'akirameru', th: 'ยอมแพ้ / ล้มเลิก', cat: 'action' },
-]
+  { jp: '諦める', furi: 'あきらめる', rom: 'akirameru', th: 'ยอมแพ้ / ล้มเลิก', cat: 'action' }
+];
 
 const KANJI_N4: KanjiItem[] = [
-  { jp: '週', furi: 'しゅう／週', on: 'シュウ', kun: '–', th: 'สัปดาห์', ex: '来週（らいしゅう）・今週（こんしゅう）', cat: 'kanji' },
-  { jp: '昨', furi: 'さく', on: 'サク', kun: '–', th: 'เมื่อวาน/ที่แล้ว', ex: '昨日（きのう）・昨年（さくねん）', cat: 'kanji' },
-  { jp: '去', furi: 'きょ・さ', on: 'キョ', kun: 'さ（る）', th: 'ผ่านไป / ไปจาก', ex: '去年（きょねん）・去る（さる）', cat: 'kanji' },
-  { jp: '代', furi: 'だい・か', on: 'ダイ／タイ', kun: 'か（わる）', th: 'แทน / ยุค / ค่าใช้จ่าย', ex: '時代（じだい）・代わる（かわる）', cat: 'kanji' },
-  { jp: '新', furi: 'しん・あたら', on: 'シン', kun: 'あたら（しい）・あら（た）', th: 'ใหม่', ex: '新しい（あたらしい）・新幹線（しんかんせん）', cat: 'kanji' },
-  { jp: '古', furi: 'こ・ふる', on: 'コ', kun: 'ふる（い）', th: 'เก่า', ex: '古い（ふるい）・古典（こてん）', cat: 'kanji' },
-  { jp: '食', furi: 'しょく・た', on: 'ショク', kun: 'た（べる）・く（う）', th: 'กิน / อาหาร', ex: '食べる（たべる）・食事（しょくじ）', cat: 'kanji' },
-  { jp: '飲', furi: 'いん・の', on: 'イン', kun: 'の（む）', th: 'ดื่ม', ex: '飲む（のむ）・飲み物（のみもの）', cat: 'kanji' },
-  { jp: '見', furi: 'けん・み', on: 'ケン', kun: 'み（る）・み（える）', th: 'ดู / มองเห็น', ex: '見る（みる）・見物（けんぶつ）', cat: 'kanji' },
-  { jp: '聞', furi: 'ぶん・き', on: 'ブン／モン', kun: 'き（く）・き（こえる）', th: 'ฟัง / ถาม / ได้ยิน', ex: '聞く（きく）・新聞（しんぶん）', cat: 'kanji' },
-  { jp: '書', furi: 'しょ・か', on: 'ショ', kun: 'か（く）', th: 'เขียน', ex: '書く（かく）・書類（しょるい）', cat: 'kanji' },
-  { jp: '読', furi: 'どく・よ', on: 'ドク', kun: 'よ（む）', th: 'อ่าน', ex: '読む（よむ）・読書（どくしょ）', cat: 'kanji' },
-  { jp: '話', furi: 'わ・はな', on: 'ワ', kun: 'はな（す）・はなし', th: 'พูด / เรื่องเล่า', ex: '話す（はなす）・電話（でんわ）', cat: 'kanji' },
-  { jp: '来', furi: 'らい・く', on: 'ライ', kun: 'く（る）・き（たる）', th: 'มา', ex: '来る（くる）・来年（らいねん）', cat: 'kanji' },
-  { jp: '行', furi: 'こう・い', on: 'コウ／ギョウ', kun: 'い（く）・ゆ（く）', th: 'ไป', ex: '行く（いく）・旅行（りょこう）', cat: 'kanji' },
-  { jp: '帰', furi: 'き・かえ', on: 'キ', kun: 'かえ（る）', th: 'กลับ', ex: '帰る（かえる）・帰国（きこく）', cat: 'kanji' },
-  { jp: '出', furi: 'しゅつ・で', on: 'シュツ／スイ', kun: 'で（る）・だ（す）', th: 'ออก / นำออก', ex: '出る（でる）・出発（しゅっぱつ）', cat: 'kanji' },
-  { jp: '入', furi: 'にゅう・はい', on: 'ニュウ', kun: 'はい（る）・い（れる）', th: 'เข้า', ex: '入る（はいる）・入学（にゅうがく）', cat: 'kanji' },
-  { jp: '北', furi: 'ほく・きた', on: 'ホク', kun: 'きた', th: 'เหนือ', ex: '北（きた）・北海道（ほっかいどう）', cat: 'kanji' },
-  { jp: '南', furi: 'なん・みなみ', on: 'ナン／ナ', kun: 'みなみ', th: 'ใต้', ex: '南（みなみ）・南米（なんべい）', cat: 'kanji' },
-  { jp: '東', furi: 'とう・ひがし', on: 'トウ', kun: 'ひがし', th: 'ตะวันออก', ex: '東（ひがし）・東京（とうきょう）', cat: 'kanji' },
-  { jp: '西', furi: 'せい・にし', on: 'セイ／サイ', kun: 'にし', th: 'ตะวันตก', ex: '西（にし）・関西（かんさい）', cat: 'kanji' },
-  { jp: '駅', furi: 'えき', on: 'エキ', kun: '–', th: 'สถานี', ex: '駅（えき）・駅員（えきいん）', cat: 'kanji' },
-  { jp: '電', furi: 'でん', on: 'デン', kun: '–', th: 'ไฟฟ้า', ex: '電車（でんしゃ）・電話（でんわ）', cat: 'kanji' },
-  { jp: '車', furi: 'しゃ・くるま', on: 'シャ', kun: 'くるま', th: 'รถ', ex: '車（くるま）・電車（でんしゃ）', cat: 'kanji' },
-  { jp: '校', furi: 'こう', on: 'コウ', kun: '–', th: 'โรงเรียน', ex: '学校（がっこう）・高校（こうこう）', cat: 'kanji' },
-  { jp: '教', furi: 'きょう・おし', on: 'キョウ', kun: 'おし（える）・おそ（わる）', th: 'สอน / การศึกษา', ex: '教える（おしえる）・教室（きょうしつ）', cat: 'kanji' },
-  { jp: '習', furi: 'しゅう・なら', on: 'シュウ', kun: 'なら（う）', th: 'เรียน / ฝึก', ex: '習う（ならう）・練習（れんしゅう）', cat: 'kanji' },
-  { jp: '医', furi: 'い', on: 'イ', kun: '–', th: 'การแพทย์ / หมอ', ex: '医者（いしゃ）・医学（いがく）', cat: 'kanji' },
-  { jp: '病', furi: 'びょう・やまい', on: 'ビョウ', kun: 'やまい', th: 'โรค', ex: '病気（びょうき）・病院（びょういん）', cat: 'kanji' },
-  { jp: '薬', furi: 'やく・くすり', on: 'ヤク', kun: 'くすり', th: 'ยา', ex: '薬（くすり）・薬局（やっきょく）', cat: 'kanji' },
-  { jp: '体', furi: 'たい・からだ', on: 'タイ／テイ', kun: 'からだ', th: 'ร่างกาย', ex: '体（からだ）・体育（たいいく）', cat: 'kanji' },
-  { jp: '頭', furi: 'とう・あたま', on: 'トウ／ズ', kun: 'あたま・かしら', th: 'หัว', ex: '頭（あたま）・頭痛（ずつう）', cat: 'kanji' },
-  { jp: '心', furi: 'しん・こころ', on: 'シン', kun: 'こころ', th: 'จิตใจ / หัวใจ', ex: '心（こころ）・心配（しんぱい）', cat: 'kanji' },
-  { jp: '天', furi: 'てん', on: 'テン', kun: 'あめ・あま', th: 'ฟ้า / สวรรค์', ex: '天気（てんき）・天国（てんごく）', cat: 'kanji' },
-  { jp: '気', furi: 'き・け', on: 'キ／ケ', kun: '–', th: 'อากาศ / ความรู้สึก', ex: '天気（てんき）・気持ち（きもち）', cat: 'kanji' },
-  { jp: '海', furi: 'かい・うみ', on: 'カイ', kun: 'うみ', th: 'ทะเล', ex: '海（うみ）・海岸（かいがん）', cat: 'kanji' },
-  { jp: '山', furi: 'さん・やま', on: 'サン', kun: 'やま', th: 'ภูเขา', ex: '山（やま）・登山（とざん）', cat: 'kanji' },
-  { jp: '川', furi: 'せん・かわ', on: 'セン', kun: 'かわ', th: 'แม่น้ำ', ex: '川（かわ）・川沿い（かわぞい）', cat: 'kanji' },
-  { jp: '花', furi: 'か・はな', on: 'カ', kun: 'はな', th: 'ดอกไม้', ex: '花（はな）・花見（はなみ）', cat: 'kanji' },
-  { jp: '知', furi: 'ち・し', on: 'チ', kun: 'し（る）', th: 'รู้ / รู้จัก', ex: '知る（しる）・知識（ちしき）', cat: 'kanji' },
-  { jp: '思', furi: 'し・おも', on: 'シ', kun: 'おも（う）', th: 'คิด / รู้สึก', ex: '思う（おもう）・思い出（おもいで）', cat: 'kanji' },
-  { jp: '待', furi: 'たい・ま', on: 'タイ', kun: 'ま（つ）', th: 'รอ', ex: '待つ（まつ）・期待（きたい）', cat: 'kanji' },
-  { jp: '使', furi: 'し・つか', on: 'シ', kun: 'つか（う）', th: 'ใช้', ex: '使う（つかう）・使い方（つかいかた）', cat: 'kanji' },
-  { jp: '作', furi: 'さく・つく', on: 'サク／サ', kun: 'つく（る）', th: 'สร้าง / ทำ', ex: '作る（つくる）・作品（さくひん）', cat: 'kanji' },
-  { jp: '持', furi: 'じ・も', on: 'ジ', kun: 'も（つ）', th: 'ถือ / มี', ex: '持つ（もつ）・気持ち（きもち）', cat: 'kanji' },
-  { jp: '買', furi: 'ばい・か', on: 'バイ', kun: 'か（う）', th: 'ซื้อ', ex: '買う（かう）・買い物（かいもの）', cat: 'kanji' },
-  { jp: '売', furi: 'ばい・う', on: 'バイ', kun: 'う（る）・う（れる）', th: 'ขาย', ex: '売る（うる）・売り場（うりば）', cat: 'kanji' },
-  { jp: '急', furi: 'きゅう・いそ', on: 'キュウ', kun: 'いそ（ぐ）', th: 'รีบ / เร่งด่วน', ex: '急ぐ（いそぐ）・急行（きゅうこう）', cat: 'kanji' },
-  { jp: '多', furi: 'た・おお', on: 'タ', kun: 'おお（い）', th: 'มาก', ex: '多い（おおい）・多分（たぶん）', cat: 'kanji' },
-]
+  {
+    jp: '週',
+    furi: 'しゅう／週',
+    on: 'シュウ',
+    kun: '–',
+    th: 'สัปดาห์',
+    ex: '来週（らいしゅう）・今週（こんしゅう）',
+    cat: 'kanji'
+  },
+  {
+    jp: '昨',
+    furi: 'さく',
+    on: 'サク',
+    kun: '–',
+    th: 'เมื่อวาน/ที่แล้ว',
+    ex: '昨日（きのう）・昨年（さくねん）',
+    cat: 'kanji'
+  },
+  {
+    jp: '去',
+    furi: 'きょ・さ',
+    on: 'キョ',
+    kun: 'さ（る）',
+    th: 'ผ่านไป / ไปจาก',
+    ex: '去年（きょねん）・去る（さる）',
+    cat: 'kanji'
+  },
+  {
+    jp: '代',
+    furi: 'だい・か',
+    on: 'ダイ／タイ',
+    kun: 'か（わる）',
+    th: 'แทน / ยุค / ค่าใช้จ่าย',
+    ex: '時代（じだい）・代わる（かわる）',
+    cat: 'kanji'
+  },
+  {
+    jp: '新',
+    furi: 'しん・あたら',
+    on: 'シン',
+    kun: 'あたら（しい）・あら（た）',
+    th: 'ใหม่',
+    ex: '新しい（あたらしい）・新幹線（しんかんせん）',
+    cat: 'kanji'
+  },
+  {
+    jp: '古',
+    furi: 'こ・ふる',
+    on: 'コ',
+    kun: 'ふる（い）',
+    th: 'เก่า',
+    ex: '古い（ふるい）・古典（こてん）',
+    cat: 'kanji'
+  },
+  {
+    jp: '食',
+    furi: 'しょく・た',
+    on: 'ショク',
+    kun: 'た（べる）・く（う）',
+    th: 'กิน / อาหาร',
+    ex: '食べる（たべる）・食事（しょくじ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '飲',
+    furi: 'いん・の',
+    on: 'イン',
+    kun: 'の（む）',
+    th: 'ดื่ม',
+    ex: '飲む（のむ）・飲み物（のみもの）',
+    cat: 'kanji'
+  },
+  {
+    jp: '見',
+    furi: 'けん・み',
+    on: 'ケン',
+    kun: 'み（る）・み（える）',
+    th: 'ดู / มองเห็น',
+    ex: '見る（みる）・見物（けんぶつ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '聞',
+    furi: 'ぶん・き',
+    on: 'ブン／モン',
+    kun: 'き（く）・き（こえる）',
+    th: 'ฟัง / ถาม / ได้ยิน',
+    ex: '聞く（きく）・新聞（しんぶん）',
+    cat: 'kanji'
+  },
+  {
+    jp: '書',
+    furi: 'しょ・か',
+    on: 'ショ',
+    kun: 'か（く）',
+    th: 'เขียน',
+    ex: '書く（かく）・書類（しょるい）',
+    cat: 'kanji'
+  },
+  {
+    jp: '読',
+    furi: 'どく・よ',
+    on: 'ドク',
+    kun: 'よ（む）',
+    th: 'อ่าน',
+    ex: '読む（よむ）・読書（どくしょ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '話',
+    furi: 'わ・はな',
+    on: 'ワ',
+    kun: 'はな（す）・はなし',
+    th: 'พูด / เรื่องเล่า',
+    ex: '話す（はなす）・電話（でんわ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '来',
+    furi: 'らい・く',
+    on: 'ライ',
+    kun: 'く（る）・き（たる）',
+    th: 'มา',
+    ex: '来る（くる）・来年（らいねん）',
+    cat: 'kanji'
+  },
+  {
+    jp: '行',
+    furi: 'こう・い',
+    on: 'コウ／ギョウ',
+    kun: 'い（く）・ゆ（く）',
+    th: 'ไป',
+    ex: '行く（いく）・旅行（りょこう）',
+    cat: 'kanji'
+  },
+  {
+    jp: '帰',
+    furi: 'き・かえ',
+    on: 'キ',
+    kun: 'かえ（る）',
+    th: 'กลับ',
+    ex: '帰る（かえる）・帰国（きこく）',
+    cat: 'kanji'
+  },
+  {
+    jp: '出',
+    furi: 'しゅつ・で',
+    on: 'シュツ／スイ',
+    kun: 'で（る）・だ（す）',
+    th: 'ออก / นำออก',
+    ex: '出る（でる）・出発（しゅっぱつ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '入',
+    furi: 'にゅう・はい',
+    on: 'ニュウ',
+    kun: 'はい（る）・い（れる）',
+    th: 'เข้า',
+    ex: '入る（はいる）・入学（にゅうがく）',
+    cat: 'kanji'
+  },
+  {
+    jp: '北',
+    furi: 'ほく・きた',
+    on: 'ホク',
+    kun: 'きた',
+    th: 'เหนือ',
+    ex: '北（きた）・北海道（ほっかいどう）',
+    cat: 'kanji'
+  },
+  {
+    jp: '南',
+    furi: 'なん・みなみ',
+    on: 'ナン／ナ',
+    kun: 'みなみ',
+    th: 'ใต้',
+    ex: '南（みなみ）・南米（なんべい）',
+    cat: 'kanji'
+  },
+  {
+    jp: '東',
+    furi: 'とう・ひがし',
+    on: 'トウ',
+    kun: 'ひがし',
+    th: 'ตะวันออก',
+    ex: '東（ひがし）・東京（とうきょう）',
+    cat: 'kanji'
+  },
+  {
+    jp: '西',
+    furi: 'せい・にし',
+    on: 'セイ／サイ',
+    kun: 'にし',
+    th: 'ตะวันตก',
+    ex: '西（にし）・関西（かんさい）',
+    cat: 'kanji'
+  },
+  {
+    jp: '駅',
+    furi: 'えき',
+    on: 'エキ',
+    kun: '–',
+    th: 'สถานี',
+    ex: '駅（えき）・駅員（えきいん）',
+    cat: 'kanji'
+  },
+  {
+    jp: '電',
+    furi: 'でん',
+    on: 'デン',
+    kun: '–',
+    th: 'ไฟฟ้า',
+    ex: '電車（でんしゃ）・電話（でんわ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '車',
+    furi: 'しゃ・くるま',
+    on: 'シャ',
+    kun: 'くるま',
+    th: 'รถ',
+    ex: '車（くるま）・電車（でんしゃ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '校',
+    furi: 'こう',
+    on: 'コウ',
+    kun: '–',
+    th: 'โรงเรียน',
+    ex: '学校（がっこう）・高校（こうこう）',
+    cat: 'kanji'
+  },
+  {
+    jp: '教',
+    furi: 'きょう・おし',
+    on: 'キョウ',
+    kun: 'おし（える）・おそ（わる）',
+    th: 'สอน / การศึกษา',
+    ex: '教える（おしえる）・教室（きょうしつ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '習',
+    furi: 'しゅう・なら',
+    on: 'シュウ',
+    kun: 'なら（う）',
+    th: 'เรียน / ฝึก',
+    ex: '習う（ならう）・練習（れんしゅう）',
+    cat: 'kanji'
+  },
+  {
+    jp: '医',
+    furi: 'い',
+    on: 'イ',
+    kun: '–',
+    th: 'การแพทย์ / หมอ',
+    ex: '医者（いしゃ）・医学（いがく）',
+    cat: 'kanji'
+  },
+  {
+    jp: '病',
+    furi: 'びょう・やまい',
+    on: 'ビョウ',
+    kun: 'やまい',
+    th: 'โรค',
+    ex: '病気（びょうき）・病院（びょういん）',
+    cat: 'kanji'
+  },
+  {
+    jp: '薬',
+    furi: 'やく・くすり',
+    on: 'ヤク',
+    kun: 'くすり',
+    th: 'ยา',
+    ex: '薬（くすり）・薬局（やっきょく）',
+    cat: 'kanji'
+  },
+  {
+    jp: '体',
+    furi: 'たい・からだ',
+    on: 'タイ／テイ',
+    kun: 'からだ',
+    th: 'ร่างกาย',
+    ex: '体（からだ）・体育（たいいく）',
+    cat: 'kanji'
+  },
+  {
+    jp: '頭',
+    furi: 'とう・あたま',
+    on: 'トウ／ズ',
+    kun: 'あたま・かしら',
+    th: 'หัว',
+    ex: '頭（あたま）・頭痛（ずつう）',
+    cat: 'kanji'
+  },
+  {
+    jp: '心',
+    furi: 'しん・こころ',
+    on: 'シン',
+    kun: 'こころ',
+    th: 'จิตใจ / หัวใจ',
+    ex: '心（こころ）・心配（しんぱい）',
+    cat: 'kanji'
+  },
+  {
+    jp: '天',
+    furi: 'てん',
+    on: 'テン',
+    kun: 'あめ・あま',
+    th: 'ฟ้า / สวรรค์',
+    ex: '天気（てんき）・天国（てんごく）',
+    cat: 'kanji'
+  },
+  {
+    jp: '気',
+    furi: 'き・け',
+    on: 'キ／ケ',
+    kun: '–',
+    th: 'อากาศ / ความรู้สึก',
+    ex: '天気（てんき）・気持ち（きもち）',
+    cat: 'kanji'
+  },
+  {
+    jp: '海',
+    furi: 'かい・うみ',
+    on: 'カイ',
+    kun: 'うみ',
+    th: 'ทะเล',
+    ex: '海（うみ）・海岸（かいがん）',
+    cat: 'kanji'
+  },
+  {
+    jp: '山',
+    furi: 'さん・やま',
+    on: 'サン',
+    kun: 'やま',
+    th: 'ภูเขา',
+    ex: '山（やま）・登山（とざん）',
+    cat: 'kanji'
+  },
+  {
+    jp: '川',
+    furi: 'せん・かわ',
+    on: 'セン',
+    kun: 'かわ',
+    th: 'แม่น้ำ',
+    ex: '川（かわ）・川沿い（かわぞい）',
+    cat: 'kanji'
+  },
+  {
+    jp: '花',
+    furi: 'か・はな',
+    on: 'カ',
+    kun: 'はな',
+    th: 'ดอกไม้',
+    ex: '花（はな）・花見（はなみ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '知',
+    furi: 'ち・し',
+    on: 'チ',
+    kun: 'し（る）',
+    th: 'รู้ / รู้จัก',
+    ex: '知る（しる）・知識（ちしき）',
+    cat: 'kanji'
+  },
+  {
+    jp: '思',
+    furi: 'し・おも',
+    on: 'シ',
+    kun: 'おも（う）',
+    th: 'คิด / รู้สึก',
+    ex: '思う（おもう）・思い出（おもいで）',
+    cat: 'kanji'
+  },
+  {
+    jp: '待',
+    furi: 'たい・ま',
+    on: 'タイ',
+    kun: 'ま（つ）',
+    th: 'รอ',
+    ex: '待つ（まつ）・期待（きたい）',
+    cat: 'kanji'
+  },
+  {
+    jp: '使',
+    furi: 'し・つか',
+    on: 'シ',
+    kun: 'つか（う）',
+    th: 'ใช้',
+    ex: '使う（つかう）・使い方（つかいかた）',
+    cat: 'kanji'
+  },
+  {
+    jp: '作',
+    furi: 'さく・つく',
+    on: 'サク／サ',
+    kun: 'つく（る）',
+    th: 'สร้าง / ทำ',
+    ex: '作る（つくる）・作品（さくひん）',
+    cat: 'kanji'
+  },
+  {
+    jp: '持',
+    furi: 'じ・も',
+    on: 'ジ',
+    kun: 'も（つ）',
+    th: 'ถือ / มี',
+    ex: '持つ（もつ）・気持ち（きもち）',
+    cat: 'kanji'
+  },
+  {
+    jp: '買',
+    furi: 'ばい・か',
+    on: 'バイ',
+    kun: 'か（う）',
+    th: 'ซื้อ',
+    ex: '買う（かう）・買い物（かいもの）',
+    cat: 'kanji'
+  },
+  {
+    jp: '売',
+    furi: 'ばい・う',
+    on: 'バイ',
+    kun: 'う（る）・う（れる）',
+    th: 'ขาย',
+    ex: '売る（うる）・売り場（うりば）',
+    cat: 'kanji'
+  },
+  {
+    jp: '急',
+    furi: 'きゅう・いそ',
+    on: 'キュウ',
+    kun: 'いそ（ぐ）',
+    th: 'รีบ / เร่งด่วน',
+    ex: '急ぐ（いそぐ）・急行（きゅうこう）',
+    cat: 'kanji'
+  },
+  {
+    jp: '多',
+    furi: 'た・おお',
+    on: 'タ',
+    kun: 'おお（い）',
+    th: 'มาก',
+    ex: '多い（おおい）・多分（たぶん）',
+    cat: 'kanji'
+  }
+];
 
 const VOCAB_N5: VocabItem[] = [
   { jp: '今日', furi: 'きょう', rom: 'kyou', th: 'วันนี้', cat: 'time' },
@@ -231,69 +632,476 @@ const VOCAB_N5: VocabItem[] = [
   { jp: '待つ', furi: 'まつ', rom: 'matsu', th: 'รอ', cat: 'action' },
   { jp: '会う', furi: 'あう', rom: 'au', th: 'พบ / เจอ', cat: 'action' },
   { jp: '使う', furi: 'つかう', rom: 'tsukau', th: 'ใช้', cat: 'action' },
-  { jp: '作る', furi: 'つくる', rom: 'tsukuru', th: 'ทำ / สร้าง', cat: 'action' },
-]
+  { jp: '作る', furi: 'つくる', rom: 'tsukuru', th: 'ทำ / สร้าง', cat: 'action' }
+];
 
 const KANJI_N5: KanjiItem[] = [
-  { jp: '日', furi: 'にち・ひ', on: 'ニチ／ジツ', kun: 'ひ・か', th: 'วัน / ดวงอาทิตย์', ex: '日本（にほん）・毎日（まいにち）', cat: 'kanji' },
-  { jp: '月', furi: 'つき・げつ', on: 'ゲツ／ガツ', kun: 'つき', th: 'เดือน / ดวงจันทร์', ex: '月曜日（げつようび）・今月（こんげつ）', cat: 'kanji' },
-  { jp: '年', furi: 'ねん・とし', on: 'ネン', kun: 'とし', th: 'ปี', ex: '今年（ことし）・来年（らいねん）', cat: 'kanji' },
-  { jp: '人', furi: 'じん・ひと', on: 'ジン／ニン', kun: 'ひと', th: 'คน', ex: '日本人（にほんじん）・一人（ひとり）', cat: 'kanji' },
-  { jp: '大', furi: 'だい・おお', on: 'ダイ／タイ', kun: 'おお（きい）', th: 'ใหญ่', ex: '大きい（おおきい）・大学（だいがく）', cat: 'kanji' },
-  { jp: '小', furi: 'しょう・ちい', on: 'ショウ', kun: 'ちい（さい）・こ', th: 'เล็ก', ex: '小さい（ちいさい）・小学校（しょうがっこう）', cat: 'kanji' },
-  { jp: '中', furi: 'ちゅう・なか', on: 'チュウ', kun: 'なか', th: 'กลาง / ใน', ex: '中（なか）・中学校（ちゅうがっこう）', cat: 'kanji' },
-  { jp: '上', furi: 'じょう・うえ', on: 'ジョウ', kun: 'うえ・うわ・かみ', th: 'บน / ข้างบน', ex: '上（うえ）・上手（じょうず）', cat: 'kanji' },
-  { jp: '下', furi: 'か・した', on: 'カ／ゲ', kun: 'した・しも', th: 'ล่าง / ข้างล่าง', ex: '下（した）・地下（ちか）', cat: 'kanji' },
-  { jp: '一', furi: 'いち・ひと', on: 'イチ／イツ', kun: 'ひと（つ）', th: 'หนึ่ง', ex: '一つ（ひとつ）・一月（いちがつ）', cat: 'kanji' },
-  { jp: '二', furi: 'に・ふた', on: 'ニ', kun: 'ふた（つ）', th: 'สอง', ex: '二つ（ふたつ）・二月（にがつ）', cat: 'kanji' },
-  { jp: '三', furi: 'さん・み', on: 'サン', kun: 'み（つ）', th: 'สาม', ex: '三つ（みっつ）・三月（さんがつ）', cat: 'kanji' },
-  { jp: '四', furi: 'し・よ', on: 'シ', kun: 'よ（つ）・よん', th: 'สี่', ex: '四つ（よっつ）・四月（しがつ）', cat: 'kanji' },
-  { jp: '五', furi: 'ご・いつ', on: 'ゴ', kun: 'いつ（つ）', th: 'ห้า', ex: '五つ（いつつ）・五月（ごがつ）', cat: 'kanji' },
-  { jp: '六', furi: 'ろく・む', on: 'ロク', kun: 'む（つ）・むっ', th: 'หก', ex: '六つ（むっつ）・六月（ろくがつ）', cat: 'kanji' },
-  { jp: '七', furi: 'しち・なな', on: 'シチ', kun: 'なな（つ）', th: 'เจ็ด', ex: '七つ（ななつ）・七月（しちがつ）', cat: 'kanji' },
-  { jp: '八', furi: 'はち・や', on: 'ハチ', kun: 'や（つ）', th: 'แปด', ex: '八つ（やっつ）・八月（はちがつ）', cat: 'kanji' },
-  { jp: '九', furi: 'く・きゅう', on: 'ク／キュウ', kun: 'ここの（つ）', th: 'เก้า', ex: '九つ（ここのつ）・九月（くがつ）', cat: 'kanji' },
-  { jp: '十', furi: 'じゅう・とお', on: 'ジュウ／ジッ', kun: 'とお', th: 'สิบ', ex: '十（じゅう）・十月（じゅうがつ）', cat: 'kanji' },
-  { jp: '百', furi: 'ひゃく', on: 'ヒャク', kun: '–', th: 'ร้อย', ex: '百円（ひゃくえん）・三百（さんびゃく）', cat: 'kanji' },
-  { jp: '千', furi: 'せん', on: 'セン', kun: '–', th: 'พัน', ex: '千円（せんえん）・三千（さんぜん）', cat: 'kanji' },
-  { jp: '万', furi: 'まん', on: 'マン／バン', kun: '–', th: 'หมื่น', ex: '一万（いちまん）・万国（ばんこく）', cat: 'kanji' },
-  { jp: '火', furi: 'か・ひ', on: 'カ', kun: 'ひ', th: 'ไฟ', ex: '火曜日（かようび）・火事（かじ）', cat: 'kanji' },
-  { jp: '水', furi: 'すい・みず', on: 'スイ', kun: 'みず', th: 'น้ำ', ex: '水曜日（すいようび）・水（みず）', cat: 'kanji' },
-  { jp: '木', furi: 'もく・き', on: 'モク／ボク', kun: 'き・こ', th: 'ต้นไม้', ex: '木曜日（もくようび）・木（き）', cat: 'kanji' },
-  { jp: '金', furi: 'きん・かね', on: 'キン／コン', kun: 'かね', th: 'ทอง / เงิน', ex: '金曜日（きんようび）・お金（おかね）', cat: 'kanji' },
-  { jp: '土', furi: 'ど・つち', on: 'ド／ト', kun: 'つち', th: 'ดิน', ex: '土曜日（どようび）・土（つち）', cat: 'kanji' },
-  { jp: '山', furi: 'さん・やま', on: 'サン', kun: 'やま', th: 'ภูเขา', ex: '山（やま）・富士山（ふじさん）', cat: 'kanji' },
-  { jp: '川', furi: 'せん・かわ', on: 'セン', kun: 'かわ', th: 'แม่น้ำ', ex: '川（かわ）・川口（かわぐち）', cat: 'kanji' },
-  { jp: '女', furi: 'じょ・おんな', on: 'ジョ／ニョ', kun: 'おんな・め', th: 'ผู้หญิง', ex: '女（おんな）・女性（じょせい）', cat: 'kanji' },
-  { jp: '男', furi: 'だん・おとこ', on: 'ダン／ナン', kun: 'おとこ', th: 'ผู้ชาย', ex: '男（おとこ）・男性（だんせい）', cat: 'kanji' },
-  { jp: '子', furi: 'こ・し', on: 'シ／ス', kun: 'こ', th: 'เด็ก', ex: '子供（こども）・女子（じょし）', cat: 'kanji' },
-  { jp: '国', furi: 'こく・くに', on: 'コク', kun: 'くに', th: 'ประเทศ', ex: '日本国（にほんこく）・外国（がいこく）', cat: 'kanji' },
-  { jp: '語', furi: 'ご・かた', on: 'ゴ', kun: 'かた（る）', th: 'ภาษา / คำ', ex: '日本語（にほんご）・語る（かたる）', cat: 'kanji' },
-  { jp: '学', furi: 'がく・まな', on: 'ガク', kun: 'まな（ぶ）', th: 'เรียน / วิทยา', ex: '大学（だいがく）・学ぶ（まなぶ）', cat: 'kanji' },
-  { jp: '校', furi: 'こう', on: 'コウ', kun: '–', th: 'โรงเรียน', ex: '学校（がっこう）・高校（こうこう）', cat: 'kanji' },
-  { jp: '先', furi: 'せん・さき', on: 'セン', kun: 'さき', th: 'ก่อน / ปลาย', ex: '先生（せんせい）・先（さき）', cat: 'kanji' },
-  { jp: '生', furi: 'せい・なま', on: 'セイ／ショウ', kun: 'い（きる）・なま', th: 'ชีวิต / เกิด', ex: '学生（がくせい）・先生（せんせい）', cat: 'kanji' },
-  { jp: '右', furi: 'う・みぎ', on: 'ウ／ユウ', kun: 'みぎ', th: 'ขวา', ex: '右（みぎ）・右折（うせつ）', cat: 'kanji' },
-  { jp: '左', furi: 'さ・ひだり', on: 'サ', kun: 'ひだり', th: 'ซ้าย', ex: '左（ひだり）・左折（させつ）', cat: 'kanji' },
-  { jp: '口', furi: 'こう・くち', on: 'コウ／ク', kun: 'くち', th: 'ปาก', ex: '口（くち）・入口（いりぐち）', cat: 'kanji' },
-  { jp: '目', furi: 'もく・め', on: 'モク／ボク', kun: 'め', th: 'ตา', ex: '目（め）・目標（もくひょう）', cat: 'kanji' },
-  { jp: '耳', furi: 'じ・みみ', on: 'ジ', kun: 'みみ', th: 'หู', ex: '耳（みみ）・耳鼻科（じびか）', cat: 'kanji' },
-  { jp: '手', furi: 'しゅ・て', on: 'シュ', kun: 'て', th: 'มือ', ex: '手（て）・上手（じょうず）', cat: 'kanji' },
-  { jp: '足', furi: 'そく・あし', on: 'ソク', kun: 'あし・た（りる）', th: 'เท้า / ขา', ex: '足（あし）・足りる（たりる）', cat: 'kanji' },
-]
+  {
+    jp: '日',
+    furi: 'にち・ひ',
+    on: 'ニチ／ジツ',
+    kun: 'ひ・か',
+    th: 'วัน / ดวงอาทิตย์',
+    ex: '日本（にほん）・毎日（まいにち）',
+    cat: 'kanji'
+  },
+  {
+    jp: '月',
+    furi: 'つき・げつ',
+    on: 'ゲツ／ガツ',
+    kun: 'つき',
+    th: 'เดือน / ดวงจันทร์',
+    ex: '月曜日（げつようび）・今月（こんげつ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '年',
+    furi: 'ねん・とし',
+    on: 'ネン',
+    kun: 'とし',
+    th: 'ปี',
+    ex: '今年（ことし）・来年（らいねん）',
+    cat: 'kanji'
+  },
+  {
+    jp: '人',
+    furi: 'じん・ひと',
+    on: 'ジン／ニン',
+    kun: 'ひと',
+    th: 'คน',
+    ex: '日本人（にほんじん）・一人（ひとり）',
+    cat: 'kanji'
+  },
+  {
+    jp: '大',
+    furi: 'だい・おお',
+    on: 'ダイ／タイ',
+    kun: 'おお（きい）',
+    th: 'ใหญ่',
+    ex: '大きい（おおきい）・大学（だいがく）',
+    cat: 'kanji'
+  },
+  {
+    jp: '小',
+    furi: 'しょう・ちい',
+    on: 'ショウ',
+    kun: 'ちい（さい）・こ',
+    th: 'เล็ก',
+    ex: '小さい（ちいさい）・小学校（しょうがっこう）',
+    cat: 'kanji'
+  },
+  {
+    jp: '中',
+    furi: 'ちゅう・なか',
+    on: 'チュウ',
+    kun: 'なか',
+    th: 'กลาง / ใน',
+    ex: '中（なか）・中学校（ちゅうがっこう）',
+    cat: 'kanji'
+  },
+  {
+    jp: '上',
+    furi: 'じょう・うえ',
+    on: 'ジョウ',
+    kun: 'うえ・うわ・かみ',
+    th: 'บน / ข้างบน',
+    ex: '上（うえ）・上手（じょうず）',
+    cat: 'kanji'
+  },
+  {
+    jp: '下',
+    furi: 'か・した',
+    on: 'カ／ゲ',
+    kun: 'した・しも',
+    th: 'ล่าง / ข้างล่าง',
+    ex: '下（した）・地下（ちか）',
+    cat: 'kanji'
+  },
+  {
+    jp: '一',
+    furi: 'いち・ひと',
+    on: 'イチ／イツ',
+    kun: 'ひと（つ）',
+    th: 'หนึ่ง',
+    ex: '一つ（ひとつ）・一月（いちがつ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '二',
+    furi: 'に・ふた',
+    on: 'ニ',
+    kun: 'ふた（つ）',
+    th: 'สอง',
+    ex: '二つ（ふたつ）・二月（にがつ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '三',
+    furi: 'さん・み',
+    on: 'サン',
+    kun: 'み（つ）',
+    th: 'สาม',
+    ex: '三つ（みっつ）・三月（さんがつ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '四',
+    furi: 'し・よ',
+    on: 'シ',
+    kun: 'よ（つ）・よん',
+    th: 'สี่',
+    ex: '四つ（よっつ）・四月（しがつ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '五',
+    furi: 'ご・いつ',
+    on: 'ゴ',
+    kun: 'いつ（つ）',
+    th: 'ห้า',
+    ex: '五つ（いつつ）・五月（ごがつ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '六',
+    furi: 'ろく・む',
+    on: 'ロク',
+    kun: 'む（つ）・むっ',
+    th: 'หก',
+    ex: '六つ（むっつ）・六月（ろくがつ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '七',
+    furi: 'しち・なな',
+    on: 'シチ',
+    kun: 'なな（つ）',
+    th: 'เจ็ด',
+    ex: '七つ（ななつ）・七月（しちがつ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '八',
+    furi: 'はち・や',
+    on: 'ハチ',
+    kun: 'や（つ）',
+    th: 'แปด',
+    ex: '八つ（やっつ）・八月（はちがつ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '九',
+    furi: 'く・きゅう',
+    on: 'ク／キュウ',
+    kun: 'ここの（つ）',
+    th: 'เก้า',
+    ex: '九つ（ここのつ）・九月（くがつ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '十',
+    furi: 'じゅう・とお',
+    on: 'ジュウ／ジッ',
+    kun: 'とお',
+    th: 'สิบ',
+    ex: '十（じゅう）・十月（じゅうがつ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '百',
+    furi: 'ひゃく',
+    on: 'ヒャク',
+    kun: '–',
+    th: 'ร้อย',
+    ex: '百円（ひゃくえん）・三百（さんびゃく）',
+    cat: 'kanji'
+  },
+  {
+    jp: '千',
+    furi: 'せん',
+    on: 'セン',
+    kun: '–',
+    th: 'พัน',
+    ex: '千円（せんえん）・三千（さんぜん）',
+    cat: 'kanji'
+  },
+  {
+    jp: '万',
+    furi: 'まん',
+    on: 'マン／バン',
+    kun: '–',
+    th: 'หมื่น',
+    ex: '一万（いちまん）・万国（ばんこく）',
+    cat: 'kanji'
+  },
+  {
+    jp: '火',
+    furi: 'か・ひ',
+    on: 'カ',
+    kun: 'ひ',
+    th: 'ไฟ',
+    ex: '火曜日（かようび）・火事（かじ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '水',
+    furi: 'すい・みず',
+    on: 'スイ',
+    kun: 'みず',
+    th: 'น้ำ',
+    ex: '水曜日（すいようび）・水（みず）',
+    cat: 'kanji'
+  },
+  {
+    jp: '木',
+    furi: 'もく・き',
+    on: 'モク／ボク',
+    kun: 'き・こ',
+    th: 'ต้นไม้',
+    ex: '木曜日（もくようび）・木（き）',
+    cat: 'kanji'
+  },
+  {
+    jp: '金',
+    furi: 'きん・かね',
+    on: 'キン／コン',
+    kun: 'かね',
+    th: 'ทอง / เงิน',
+    ex: '金曜日（きんようび）・お金（おかね）',
+    cat: 'kanji'
+  },
+  {
+    jp: '土',
+    furi: 'ど・つち',
+    on: 'ド／ト',
+    kun: 'つち',
+    th: 'ดิน',
+    ex: '土曜日（どようび）・土（つち）',
+    cat: 'kanji'
+  },
+  {
+    jp: '山',
+    furi: 'さん・やま',
+    on: 'サン',
+    kun: 'やま',
+    th: 'ภูเขา',
+    ex: '山（やま）・富士山（ふじさん）',
+    cat: 'kanji'
+  },
+  {
+    jp: '川',
+    furi: 'せん・かわ',
+    on: 'セン',
+    kun: 'かわ',
+    th: 'แม่น้ำ',
+    ex: '川（かわ）・川口（かわぐち）',
+    cat: 'kanji'
+  },
+  {
+    jp: '女',
+    furi: 'じょ・おんな',
+    on: 'ジョ／ニョ',
+    kun: 'おんな・め',
+    th: 'ผู้หญิง',
+    ex: '女（おんな）・女性（じょせい）',
+    cat: 'kanji'
+  },
+  {
+    jp: '男',
+    furi: 'だん・おとこ',
+    on: 'ダン／ナン',
+    kun: 'おとこ',
+    th: 'ผู้ชาย',
+    ex: '男（おとこ）・男性（だんせい）',
+    cat: 'kanji'
+  },
+  {
+    jp: '子',
+    furi: 'こ・し',
+    on: 'シ／ス',
+    kun: 'こ',
+    th: 'เด็ก',
+    ex: '子供（こども）・女子（じょし）',
+    cat: 'kanji'
+  },
+  {
+    jp: '国',
+    furi: 'こく・くに',
+    on: 'コク',
+    kun: 'くに',
+    th: 'ประเทศ',
+    ex: '日本国（にほんこく）・外国（がいこく）',
+    cat: 'kanji'
+  },
+  {
+    jp: '語',
+    furi: 'ご・かた',
+    on: 'ゴ',
+    kun: 'かた（る）',
+    th: 'ภาษา / คำ',
+    ex: '日本語（にほんご）・語る（かたる）',
+    cat: 'kanji'
+  },
+  {
+    jp: '学',
+    furi: 'がく・まな',
+    on: 'ガク',
+    kun: 'まな（ぶ）',
+    th: 'เรียน / วิทยา',
+    ex: '大学（だいがく）・学ぶ（まなぶ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '校',
+    furi: 'こう',
+    on: 'コウ',
+    kun: '–',
+    th: 'โรงเรียน',
+    ex: '学校（がっこう）・高校（こうこう）',
+    cat: 'kanji'
+  },
+  {
+    jp: '先',
+    furi: 'せん・さき',
+    on: 'セン',
+    kun: 'さき',
+    th: 'ก่อน / ปลาย',
+    ex: '先生（せんせい）・先（さき）',
+    cat: 'kanji'
+  },
+  {
+    jp: '生',
+    furi: 'せい・なま',
+    on: 'セイ／ショウ',
+    kun: 'い（きる）・なま',
+    th: 'ชีวิต / เกิด',
+    ex: '学生（がくせい）・先生（せんせい）',
+    cat: 'kanji'
+  },
+  {
+    jp: '右',
+    furi: 'う・みぎ',
+    on: 'ウ／ユウ',
+    kun: 'みぎ',
+    th: 'ขวา',
+    ex: '右（みぎ）・右折（うせつ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '左',
+    furi: 'さ・ひだり',
+    on: 'サ',
+    kun: 'ひだり',
+    th: 'ซ้าย',
+    ex: '左（ひだり）・左折（させつ）',
+    cat: 'kanji'
+  },
+  {
+    jp: '口',
+    furi: 'こう・くち',
+    on: 'コウ／ク',
+    kun: 'くち',
+    th: 'ปาก',
+    ex: '口（くち）・入口（いりぐち）',
+    cat: 'kanji'
+  },
+  {
+    jp: '目',
+    furi: 'もく・め',
+    on: 'モク／ボク',
+    kun: 'め',
+    th: 'ตา',
+    ex: '目（め）・目標（もくひょう）',
+    cat: 'kanji'
+  },
+  {
+    jp: '耳',
+    furi: 'じ・みみ',
+    on: 'ジ',
+    kun: 'みみ',
+    th: 'หู',
+    ex: '耳（みみ）・耳鼻科（じびか）',
+    cat: 'kanji'
+  },
+  {
+    jp: '手',
+    furi: 'しゅ・て',
+    on: 'シュ',
+    kun: 'て',
+    th: 'มือ',
+    ex: '手（て）・上手（じょうず）',
+    cat: 'kanji'
+  },
+  {
+    jp: '足',
+    furi: 'そく・あし',
+    on: 'ソク',
+    kun: 'あし・た（りる）',
+    th: 'เท้า / ขา',
+    ex: '足（あし）・足りる（たりる）',
+    cat: 'kanji'
+  }
+];
 
+const mapExternalToVocab = (item: Record<string, unknown>) => {
+  const meaningRaw = item.th ?? item.meaning ?? '';
+  let th = typeof meaningRaw === 'string' ? meaningRaw : '';
+  if (th.startsWith('#')) {
+    const parts = th.split(':');
+    th = parts.length > 1 ? parts.slice(1).join(':').trim() : '';
+  }
+
+  let cat = (item.cat as string) || '';
+  if (typeof cat === 'string' && cat.startsWith('#')) cat = 'none';
+  const allowedCats = [
+    'time',
+    'daily',
+    'work',
+    'emotion',
+    'transport',
+    'body',
+    'nature',
+    'action',
+    'none'
+  ];
+  if (!allowedCats.includes(cat)) cat = 'none';
+
+  return {
+    jp: item.word,
+    furi: item.furigana || item.word || '',
+    rom: item.romaji || '',
+    th,
+    cat: cat as VocabCategory
+  } as VocabItem;
+};
+
+const EXTERNAL_MAPPED_N5 = EXTERNAL_VOCAB.filter((i) => i.level === 5).map(mapExternalToVocab);
+const EXTERNAL_MAPPED_N4 = EXTERNAL_VOCAB.filter((i) => i.level === 4).map(mapExternalToVocab);
 
 const STUDY_DATA = {
   n4: {
-    vocab: VOCAB_N4,
+    vocab: [...VOCAB_N4, ...EXTERNAL_MAPPED_N4],
     kanji: KANJI_N4,
-    grammar: GRAMMAR_N4,
+    grammar: GRAMMAR_N4
   },
   n5: {
-    vocab: VOCAB_N5,
+    vocab: [...VOCAB_N5, ...EXTERNAL_MAPPED_N5],
     kanji: KANJI_N5,
-    grammar: GRAMMAR_N5,
-  },
-} as const
+    grammar: GRAMMAR_N5
+  }
+} as const;
 
-export const getStudyData = (level: Level, tab: Tab): StudyItem[] => STUDY_DATA[level][tab]
+export const getStudyData = (level: Level, tab: Tab): ReadonlyArray<StudyItem> => {
+  const items = STUDY_DATA[level][tab];
+  if (tab === 'kanji') {
+    const seen = new Set<string>();
+    const deduped = (items as ReadonlyArray<StudyItem>).filter((it) => {
+      const key = (it as StudyItem).jp ?? '';
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+    return deduped as ReadonlyArray<StudyItem>;
+  }
+  return items;
+};
