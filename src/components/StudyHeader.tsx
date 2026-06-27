@@ -1,16 +1,23 @@
-import type { Level, Tab } from '../types'
-import type { LevelLabels, TabLabels } from '../constants'
+import type { Level, Tab } from '../types';
+import type { LevelLabels, TabLabels } from '../constants';
 
 interface StudyHeaderProps {
-  level: Level
-  tab: Tab
-  onLevelChange: (level: Level) => void
-  onTabChange: (tab: Tab) => void
-  levelLabels: LevelLabels
-  tabLabels: TabLabels
+  level: Level;
+  tab: Tab;
+  onLevelChange: (level: Level) => void;
+  onTabChange: (tab: Tab) => void;
+  levelLabels: LevelLabels;
+  tabLabels: TabLabels;
 }
 
-export function StudyHeader({ level, tab, onLevelChange, onTabChange, levelLabels, tabLabels }: StudyHeaderProps) {
+export function StudyHeader({
+  level,
+  tab,
+  onLevelChange,
+  onTabChange,
+  levelLabels,
+  tabLabels
+}: StudyHeaderProps) {
   return (
     <header className="page-header">
       <div className="header-top">
@@ -23,10 +30,7 @@ export function StudyHeader({ level, tab, onLevelChange, onTabChange, levelLabel
           <button
             key={option}
             type="button"
-            className={[
-              'level-btn',
-              option === level ? `active-${option}` : '',
-            ].join(' ')}
+            className={['level-btn', option === level ? `active-${option}` : ''].join(' ')}
             onClick={() => onLevelChange(option)}
           >
             {option.toUpperCase()}
@@ -35,7 +39,7 @@ export function StudyHeader({ level, tab, onLevelChange, onTabChange, levelLabel
       </div>
 
       <div className="tabs">
-        {(['vocab', 'kanji', 'grammar'] as Tab[]).map((option) => (
+        {(['overall', 'vocab', 'kanji', 'grammar'] as Tab[]).map((option) => (
           <button
             key={option}
             type="button"
@@ -47,5 +51,5 @@ export function StudyHeader({ level, tab, onLevelChange, onTabChange, levelLabel
         ))}
       </div>
     </header>
-  )
+  );
 }

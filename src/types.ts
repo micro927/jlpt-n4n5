@@ -1,5 +1,5 @@
 export type Level = 'n4' | 'n5';
-export type Tab = 'vocab' | 'kanji' | 'grammar';
+export type Tab = 'overall' | 'vocab' | 'kanji' | 'grammar';
 export type VocabCategory =
   | 'time'
   | 'daily'
@@ -12,7 +12,8 @@ export type VocabCategory =
   | 'none';
 export type KanjiCategory = 'kanji';
 export type GrammarCategory = 'grammar';
-export type Category = VocabCategory | KanjiCategory | GrammarCategory;
+export type OverallCategory = 'overall';
+export type Category = VocabCategory | KanjiCategory | GrammarCategory | OverallCategory;
 
 export interface VocabItem {
   jp: string;
@@ -46,4 +47,31 @@ export interface GrammarItem {
   cat: GrammarCategory;
 }
 
-export type StudyItem = VocabItem | KanjiItem | GrammarItem;
+export interface OverallBullet {
+  label?: string;
+  value: string;
+}
+
+export interface OverallTableRow {
+  label: string;
+  value: string;
+}
+
+export interface OverallSection {
+  title: string;
+  rows?: OverallTableRow[];
+  bullets?: OverallBullet[];
+  list?: string[];
+}
+
+export interface OverallItem {
+  title: string;
+  subtitle?: string;
+  description?: string;
+  list?: string[];
+  bullets?: OverallBullet[];
+  sections?: OverallSection[];
+  cat: OverallCategory;
+}
+
+export type StudyItem = VocabItem | KanjiItem | GrammarItem | OverallItem;

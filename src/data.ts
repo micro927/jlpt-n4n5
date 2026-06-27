@@ -1,6 +1,15 @@
-import type { Level, Tab, VocabItem, KanjiItem, StudyItem, VocabCategory } from './types';
+import type {
+  Level,
+  Tab,
+  VocabItem,
+  KanjiItem,
+  StudyItem,
+  VocabCategory,
+  OverallItem
+} from './types';
 import { GRAMMAR_N4, GRAMMAR_N5 } from './grammar_data';
 import { vocab as EXTERNAL_VOCAB } from './data_vocab_external';
+import cheatsheet from './testing_cheatsheet.json';
 
 const VOCAB_N4: VocabItem[] = [
   { jp: '週末', furi: 'しゅうまつ', rom: 'shuumatsu', th: 'สุดสัปดาห์', cat: 'time' },
@@ -1078,13 +1087,126 @@ const mapExternalToVocab = (item: Record<string, unknown>) => {
 const EXTERNAL_MAPPED_N5 = EXTERNAL_VOCAB.filter((i) => i.level === 5).map(mapExternalToVocab);
 const EXTERNAL_MAPPED_N4 = EXTERNAL_VOCAB.filter((i) => i.level === 4).map(mapExternalToVocab);
 
+const createOverallItems = (level: Level): OverallItem[] => {
+  const isN4 = level === 'n4';
+  const exam = cheatsheet.exam_info;
+  const schedule = cheatsheet.schedule;
+  const tips = cheatsheet.tips;
+  const partNames = (exam.parts ?? []).map((part) => part.name).join(' • ');
+
+  const examSections = [
+    {
+      title: 'รูปแบบการสอบ',
+      rows: [
+        { label: 'จำนวนส่วน', value: `${exam.format.total_parts} ส่วน` },
+        { label: 'จำนวนข้อทั้งหมด', value: `${exam.total.question_count} ข้อ` },
+        { label: 'เวลาทั้งหมด', value: `${exam.total.duration_minutes} นาที` }
+      ],
+      bullets: (exam.format.notes ?? []).map((note: string) => ({ value: note })),
+      list: exam.format.restrictions ?? []
+    },
+    {
+      title: 'ส่วนสอบ',
+      rows: (exam.parts ?? []).map((part) => ({
+        label: part.name,
+        value: `${part.question_count} ข้อ • ${part.duration_minutes} นาที`
+      }))
+    },
+    {
+      title: 'ห้ามในห้องสอบ',
+      bullets: (exam.writing_in_exam?.prohibited ?? []).map((item: string) => ({ value: item }))
+    }
+  ];
+
+  const extraTipSections = [
+    {
+      title: 'คำแนะนำก่อนสอบ',
+      list: tips.before_exam ?? []
+    },
+    {
+      title: 'อนุญาตในห้องสอบ',
+      bullets: (exam.writing_in_exam?.allowed ?? []).map((item: string) => ({ value: item }))
+    },
+    {
+      title: 'กฎการฟังเสียง',
+      bullets: (exam.listening_rules ?? []).map((item: string) => ({ value: item }))
+    },
+    {
+      title: 'การให้คะแนน',
+      rows: [{ label: 'วิธี', value: exam.scoring?.method ?? '-' }],
+      bullets: (exam.scoring?.notes ?? []).map((item: string) => ({ value: item }))
+    },
+    {
+      title: 'ระหว่างพัก',
+      list: tips.during_break ?? []
+    },
+    {
+      title: 'อุปกรณ์',
+      list: tips.equipment ?? []
+    },
+    {
+      title: 'ก่อนส่งคำตอบ',
+      list: tips.before_submit ?? []
+    },
+    {
+      title: 'กฎการกรอกคำตอบ',
+      list: tips.answer_sheet ?? []
+    }
+  ];
+
+  return [
+    {
+      title: cheatsheet.meta.title,
+      subtitle: `${cheatsheet.meta.country} • ${cheatsheet.meta.language}`,
+      description: `${exam.format.total_parts} ส่วน • ${exam.total.question_count} ข้อ • ${exam.total.duration_minutes} นาที`,
+      bullets: [
+        { label: 'ระดับ', value: isN4 ? 'JLPT N4' : 'JLPT N5' },
+        { label: 'ส่วนสอบ', value: partNames }
+      ],
+      sections: examSections,
+      cat: 'overall'
+    },
+    {
+      title: 'แผนเวลา',
+      sections: [
+        {
+          title: 'ตารางเวลา',
+          rows: schedule.map((entry) => ({
+            label: entry.time,
+            value: entry.activity
+          }))
+        }
+      ],
+      cat: 'overall'
+    },
+    {
+      title: 'เทคนิคตามส่วน',
+      sections: (tips.by_part ?? []).map((part) => ({
+        title: `${part.part_name} (${part.part_id})`,
+        bullets: (part.tips ?? []).map((tip: string) => ({ value: tip })),
+        list: (part.sub_sections ?? []).flatMap((section) =>
+          section.tips.map((tip: string) => `${section.section}: ${tip}`)
+        )
+      })),
+      cat: 'overall'
+    },
+    {
+      title: 'คำแนะนำเพิ่มเติม',
+      sections: extraTipSections,
+      cat: 'overall'
+    }
+  ];
+};
+
 const STUDY_DATA = {
   n4: {
+    overall: createOverallItems('n4'),
     vocab: [...VOCAB_N4, ...EXTERNAL_MAPPED_N4],
     kanji: KANJI_N4,
     grammar: GRAMMAR_N4
   },
   n5: {
+    overall: createOverallItems('n5'),
     vocab: [...VOCAB_N5, ...EXTERNAL_MAPPED_N5],
     kanji: KANJI_N5,
     grammar: GRAMMAR_N5
@@ -1097,13 +1219,17 @@ export const getStudyData = (level: Level, tab: Tab): StudyItem[] => {
   if (tab === 'vocab') {
     const seen = new Set<string>();
     const deduped = items.filter((it) => {
-      const key = (it as StudyItem).jp ?? '';
+      const key = ('jp' in it && typeof it.jp === 'string' ? it.jp : '') ?? '';
       if (seen.has(key)) return false;
       seen.add(key);
       return true;
     });
 
-    return deduped.sort((a, b) => a.furi.localeCompare(b.furi, 'ja'));
+    return deduped.sort((a, b) => {
+      const left = 'furi' in a ? a.furi : '';
+      const right = 'furi' in b ? b.furi : '';
+      return left.localeCompare(right, 'ja');
+    });
   }
 
   return items;

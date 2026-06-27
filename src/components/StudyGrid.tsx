@@ -2,6 +2,7 @@ import type { StudyItem, Tab } from '../types';
 import { VocabCard } from './VocabCard';
 import { KanjiCard } from './KanjiCard';
 import { GrammarCard } from './GrammarCard';
+import { OverallCard } from './OverallCard';
 import { useEffect } from 'react';
 
 interface StudyGridProps {
@@ -21,9 +22,9 @@ export function StudyGrid({ items, tab, categoryLabels }: StudyGridProps) {
 
   return (
     <div className="grid-container">
-      <div className="grid">
+      <div className={['grid', tab === 'overall' ? 'overall-grid' : ''].join(' ')}>
         {items.map((item, index) => {
-          const itemKey = `${tab}-${item.jp}-${index}`;
+          const itemKey = `${tab}-${'jp' in item ? item.jp : 'overall'}-${index}`;
 
           if (tab === 'kanji' && 'on' in item) {
             return <KanjiCard key={itemKey} item={item} categoryLabel={categoryLabels[item.cat]} />;
@@ -37,6 +38,10 @@ export function StudyGrid({ items, tab, categoryLabels }: StudyGridProps) {
             return (
               <GrammarCard key={itemKey} item={item} categoryLabel={categoryLabels[item.cat]} />
             );
+          }
+
+          if (tab === 'overall' && 'title' in item) {
+            return <OverallCard key={itemKey} item={item} />;
           }
 
           return null;

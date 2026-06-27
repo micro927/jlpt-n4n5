@@ -1,7 +1,7 @@
 import type { Level, Tab, VocabCategory, KanjiCategory } from './types';
 
 export const LEVELS = ['n4', 'n5'] as const;
-export const TABS = ['vocab', 'kanji', 'grammar'] as const;
+export const TABS = ['overall', 'vocab', 'kanji', 'grammar'] as const;
 
 export const levelLabels: Record<Level, string> = {
   n4: 'JLPT N4',
@@ -12,6 +12,7 @@ export type LevelLabels = Record<Level, string>;
 export type TabLabels = Record<Tab, string>;
 
 export const tabLabels: Record<Tab, string> = {
+  overall: '🧭 ภาพรวม',
   vocab: '📖 คำศัพท์',
   kanji: '🈳 คันจิ',
   grammar: '📚 ไวยากรณ์'
@@ -45,13 +46,19 @@ const grammarCategoryLabelsN5: Record<string, string> = {
   grammar: '📚 ไวยากรณ์ N5'
 };
 
+const overallCategoryLabels: Record<string, string> = {
+  overall: '🧭 ภาพรวม'
+};
+
 export const categoryLabels = {
   n4: {
+    overall: overallCategoryLabels,
     vocab: vocabCategoryLabels,
     kanji: kanjiCategoryLabelsN4,
     grammar: grammarCategoryLabelsN4
   },
   n5: {
+    overall: overallCategoryLabels,
     vocab: vocabCategoryLabels,
     kanji: kanjiCategoryLabelsN5,
     grammar: grammarCategoryLabelsN5
@@ -61,4 +68,4 @@ export const categoryLabels = {
 export const getCategoryLabels = (level: Level, tab: Tab) => categoryLabels[level][tab];
 
 export const defaultLevel: Level = 'n4';
-export const defaultTab: Tab = 'vocab';
+export const defaultTab: Tab = 'overall';
