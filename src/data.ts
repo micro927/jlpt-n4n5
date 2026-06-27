@@ -1098,58 +1098,59 @@ const createOverallItems = (level: Level): OverallItem[] => {
     {
       title: 'รูปแบบการสอบ',
       rows: [
-        { label: 'จำนวนส่วน', value: `${exam.format.total_parts} ส่วน` },
+        { label: 'จำนวนพาร์ท', value: `${exam.format.total_parts} พาร์ท` },
         { label: 'จำนวนข้อทั้งหมด', value: `${exam.total.question_count} ข้อ` },
         { label: 'เวลาทั้งหมด', value: `${exam.total.duration_minutes} นาที` }
       ],
       list: (exam.format.notes ?? []).map((note: string) => note)
     },
     {
-      title: 'ส่วนสอบ',
+      title: 'พาร์ทสอบ',
       rows: (exam.parts ?? []).map((part) => ({
         label: part.name,
         value: `${part.question_count} ข้อ • ${part.duration_minutes} นาที`
       }))
-    },
-    {
-      title: 'ห้ามในห้องสอบ',
-      list: exam.writing_in_exam?.prohibited ?? []
     }
   ];
 
   const extraTipSections = [
     {
-      title: 'คำแนะนำก่อนสอบ',
-      list: tips.before_exam ?? []
+      title: 'อุปกรณ์',
+      list: tips.equipment ?? []
+    },
+    {
+      title: 'ห้ามในห้องสอบ',
+      list: exam.writing_in_exam?.prohibited ?? []
     },
     {
       title: 'อนุญาตในห้องสอบ',
       list: exam.writing_in_exam?.allowed ?? []
     },
     {
+      title: 'คำแนะนำก่อนสอบ',
+      list: tips.before_exam ?? []
+    },
+    {
       title: 'กฎการฟังเสียง',
       list: exam.listening_rules ?? []
     },
     {
-      title: 'การให้คะแนน',
-      rows: [{ label: 'วิธี', value: exam.scoring?.method ?? '-' }],
-      list: exam.scoring?.notes ?? []
+      title: 'กฎการกรอกคำตอบ',
+      list: tips.answer_sheet ?? []
+    },
+
+    {
+      title: 'ก่อนส่งคำตอบ',
+      list: tips.before_submit ?? []
     },
     {
       title: 'ระหว่างพัก',
       list: tips.during_break ?? []
     },
     {
-      title: 'อุปกรณ์',
-      list: tips.equipment ?? []
-    },
-    {
-      title: 'ก่อนส่งคำตอบ',
-      list: tips.before_submit ?? []
-    },
-    {
-      title: 'กฎการกรอกคำตอบ',
-      list: tips.answer_sheet ?? []
+      title: 'การให้คะแนน',
+      rows: [{ label: 'วิธี', value: exam.scoring?.method ?? '-' }],
+      list: exam.scoring?.notes ?? []
     }
   ];
 
@@ -1157,10 +1158,10 @@ const createOverallItems = (level: Level): OverallItem[] => {
     {
       title: cheatsheet.meta.title,
       subtitle: `${cheatsheet.meta.country} • ${cheatsheet.meta.language}`,
-      description: `${exam.format.total_parts} ส่วน • ${exam.total.question_count} ข้อ • ${exam.total.duration_minutes} นาที`,
+      description: `${exam.format.total_parts} พาร์ท • ${exam.total.question_count} ข้อ • ${exam.total.duration_minutes} นาที`,
       bullets: [
         { label: 'ระดับ', value: isN4 ? 'JLPT N4' : 'JLPT N5' },
-        { label: 'ส่วนสอบ', value: partNames }
+        { label: 'พาร์ทสอบ', value: partNames }
       ],
       sections: examSections,
       cat: 'overall'
@@ -1179,7 +1180,7 @@ const createOverallItems = (level: Level): OverallItem[] => {
       cat: 'overall'
     },
     {
-      title: 'เทคนิคตามส่วน',
+      title: 'เทคนิคตามพาร์ท',
       sections: (tips.by_part ?? []).map((part) => ({
         title: part.part_name,
         list: part?.sub_sections ? part?.sub_sections.flatMap((section) => section.tips) : part.tips
