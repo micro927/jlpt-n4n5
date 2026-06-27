@@ -449,4 +449,5 @@
 
 .example-jp {
   cursor: pointer;
+  user-select: none;
 }
