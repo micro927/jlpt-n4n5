@@ -1,8 +1,9 @@
-import type { GrammarItem } from '../types'
+import type { GrammarItem } from '../types';
+import { read } from '../utils/pronounce';
 
 interface GrammarCardProps {
-  item: GrammarItem
-  categoryLabel: string
+  item: GrammarItem;
+  categoryLabel: string;
 }
 
 export function GrammarCard({ item, categoryLabel }: GrammarCardProps) {
@@ -18,7 +19,9 @@ export function GrammarCard({ item, categoryLabel }: GrammarCardProps) {
           <ul>
             {item.ex.map((example) => (
               <li key={example.jp}>
-                <div className="example-jp">{example.jp}</div>
+                <div className="example-jp" onClick={() => read(example.jp)}>
+                  {example.jp}
+                </div>
                 <div className="example-th">{example.th}</div>
               </li>
             ))}
@@ -27,5 +30,5 @@ export function GrammarCard({ item, categoryLabel }: GrammarCardProps) {
       )}
       <span className="card-cat">{categoryLabel}</span>
     </article>
-  )
+  );
 }

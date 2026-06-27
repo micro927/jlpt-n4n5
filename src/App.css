@@ -446,3 +446,7 @@
     flex-wrap: unset;
   }
 }
+
+.example-jp {
+  cursor: pointer;
+}
