@@ -1102,8 +1102,7 @@ const createOverallItems = (level: Level): OverallItem[] => {
         { label: 'จำนวนข้อทั้งหมด', value: `${exam.total.question_count} ข้อ` },
         { label: 'เวลาทั้งหมด', value: `${exam.total.duration_minutes} นาที` }
       ],
-      bullets: (exam.format.notes ?? []).map((note: string) => ({ value: note })),
-      list: exam.format.restrictions ?? []
+      list: (exam.format.notes ?? []).map((note: string) => note)
     },
     {
       title: 'ส่วนสอบ',
@@ -1114,7 +1113,7 @@ const createOverallItems = (level: Level): OverallItem[] => {
     },
     {
       title: 'ห้ามในห้องสอบ',
-      bullets: (exam.writing_in_exam?.prohibited ?? []).map((item: string) => ({ value: item }))
+      list: exam.writing_in_exam?.prohibited ?? []
     }
   ];
 
@@ -1125,16 +1124,16 @@ const createOverallItems = (level: Level): OverallItem[] => {
     },
     {
       title: 'อนุญาตในห้องสอบ',
-      bullets: (exam.writing_in_exam?.allowed ?? []).map((item: string) => ({ value: item }))
+      list: exam.writing_in_exam?.allowed ?? []
     },
     {
       title: 'กฎการฟังเสียง',
-      bullets: (exam.listening_rules ?? []).map((item: string) => ({ value: item }))
+      list: exam.listening_rules ?? []
     },
     {
       title: 'การให้คะแนน',
       rows: [{ label: 'วิธี', value: exam.scoring?.method ?? '-' }],
-      bullets: (exam.scoring?.notes ?? []).map((item: string) => ({ value: item }))
+      list: exam.scoring?.notes ?? []
     },
     {
       title: 'ระหว่างพัก',
@@ -1182,11 +1181,8 @@ const createOverallItems = (level: Level): OverallItem[] => {
     {
       title: 'เทคนิคตามส่วน',
       sections: (tips.by_part ?? []).map((part) => ({
-        title: `${part.part_name} (${part.part_id})`,
-        bullets: (part.tips ?? []).map((tip: string) => ({ value: tip })),
-        list: (part.sub_sections ?? []).flatMap((section) =>
-          section.tips.map((tip: string) => `${section.section}: ${tip}`)
-        )
+        title: part.part_name,
+        list: part?.sub_sections ? part?.sub_sections.flatMap((section) => section.tips) : part.tips
       })),
       cat: 'overall'
     },
